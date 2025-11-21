@@ -290,7 +290,7 @@
             <button id="prev-btn" class="nav-btn" disabled>⬅️</button>
             
             <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1;">
-                <div id="header-title">PERJALANAN R & ANAKNYA</div>
+                <div id="header-title">PERJALANAN R & ANAKNYA MENUNTUT KEADILAN</div>
                 <div class="progress-indicator">
                     Adegan <span id="current-scene">1</span> dari <span id="total-scenes">13</span>
                 </div>
