@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pola Umum Deepfake</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8e8e8; /* Latar belakang merah muda yang lembut */
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 40px 20px;
+            margin: 0;
+            position: relative;
+        }
+
+        .logo-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            max-width: 200px;
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: auto;
+        }
+
+        h1 {
+            color: #b71c1c; /* Merah tua untuk judul */
+            text-align: center;
+            margin-bottom: 40px;
+            margin-top: 40px;
+        }
+
+        .diagram-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Menyelaraskan kartu di bagian atas */
+            flex-wrap: wrap; /* Memungkinkan kartu untuk pindah ke baris berikutnya di layar kecil */
+            gap: 25px; /* Jarak antar kartu dan panah */
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        .step-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(183, 28, 28, 0.15); /* Bayangan dengan sentuhan merah */
+            padding: 25px;
+            flex: 1 1 300px; /* Kartu dapat tumbuk, menyusut, dengan basis lebar 300px */
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 5px solid #d32f2f; /* Garis atas merah */
+            min-height: 220px; /* Tinggi minimum agar kartu seragam */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .step-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(183, 28, 28, 0.25);
+        }
+
+        .step-card.active {
+            box-shadow: 0 10px 30px rgba(183, 28, 28, 0.35);
+            border-top: 5px solid #b71c1c; /* Garis atas lebih gelap untuk kartu aktif */
+        }
+
+        .step-card h2 {
+            margin: 0 0 5px 0;
+            color: #d32f2f; /* Merah untuk nomor langkah */
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .step-card h3 {
+            margin: 0 0 15px 0;
+            font-size: 1.4em;
+            color: #b71c1c; /* Merah tua untuk judul kartu */
+            flex-grow: 1; /* Mendorong detail ke bawah jika ada ruang */
+        }
+        
+        .details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+        }
+
+        .details ul {
+            list-style-type: '› '; /* Bullet khusus */
+            padding-left: 20px;
+            margin: 0;
+        }
+
+        .details li {
+            padding: 5px 0;
+            border-bottom: 1px solid #fde7e7; /* Garis bawah dengan warna terang */
+        }
+
+        .details li:last-child {
+            border-bottom: none;
+        }
+        
+        .arrow-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            flex-shrink: 0; /* Mencegah panah menyusut */
+        }
+
+        .arrow-container svg {
+            width: 100%;
+            height: 40px;
+            fill: #ef5350; /* Warna merah untuk ikon bom */
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Responsif: Pada layar lebih kecil dari 768px, atur layout kembali ke vertikal */
+        @media (max-width: 768px) {
+            .diagram-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .arrow-container {
+                transform: rotate(90deg); /* Putar panah untuk menunjuk ke bawah */
+                width: 40px;
+                height: 50px;
+            }
+            .arrow-container svg {
+                width: 40px;
+                height: 100%;
+            }
+            
+            .logo-container {
+                position: relative;
+                top: 0;
+                right: 0;
+                max-width: 150px;
+                margin-bottom: 20px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="logo-container">
+        <img src="https://www.konde.co/wp-content/uploads/2021/03/Logo-Konde-Merah-1024x312.png" alt="Logo Konde">
+    </div>
+
+    <h1>Pola Umum Deepfake</h1>
+
+    <div class="diagram-container">
+        <!-- STEP 1 -->
+        <div class="step-card" onclick="toggleDetails(this)">
+            <h2>STEP 1</h2>
+            <h3>Pengambilan Data / Foto</h3>
+            <div class="details">
+                <ul>
+                    <li>Foto profil discrape dari media sosial atau aplikasi kencan</li>
+                    <li>Bisa dari foto yang pernah dikirim saat hubungan</li>
+                    <li>Pelaku bisa mantan, teman online, atau orang asing</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="arrow-container">
+            <!-- Ikon Bom SVG -->
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C12 2 13 5 13 6C13 7 12 8 12 8C12 8 11 7 11 6C11 5 12 2 12 2Z M18.5 7.5C18.5 7.5 20.5 9.5 21 10C21.5 10.5 21 11 21 11C21 11 20.5 11.5 20 11C19.5 10.5 17.5 8.5 17.5 8.5C17.5 8.5 18 8 18.5 7.5Z M5.5 7.5C6 8 6.5 8.5 6.5 8.5C6.5 8.5 4.5 10.5 4 11C3.5 11.5 3 11 3 11C3 11 2.5 10.5 3 10C3.5 9.5 5.5 7.5 5.5 7.5Z M12 10C15.31 10 18 12.69 18 16C18 19.31 15.31 22 12 22C8.69 22 6 19.31 6 16C6 12.69 8.69 10 12 10Z M12 12C9.79 12 8 13.79 8 16C8 18.21 9.79 20 12 20C14.21 20 16 18.21 16 16C16 13.79 14.21 12 12 12Z"/>
+            </svg>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="step-card" onclick="toggleDetails(this)">
+            <h2>STEP 2</h2>
+            <h3>Manipulasi dengan AI</h3>
+            <div class="details">
+                <ul>
+                    <li>Face swap, voice cloning, dan aplikasi edit AI</li>
+                    <li>Penerapan pola wajah atau suara korban ke tubuh orang lain</li>
+                    <li>Narasi palsu dibuat lewat chatbot atau generator teks</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="arrow-container">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C12 2 13 5 13 6C13 7 12 8 12 8C12 8 11 7 11 6C11 5 12 2 12 2Z M18.5 7.5C18.5 7.5 20.5 9.5 21 10C21.5 10.5 21 11 21 11C21 11 20.5 11.5 20 11C19.5 10.5 17.5 8.5 17.5 8.5C17.5 8.5 18 8 18.5 7.5Z M5.5 7.5C6 8 6.5 8.5 6.5 8.5C6.5 8.5 4.5 10.5 4 11C3.5 11.5 3 11 3 11C3 11 2.5 10.5 3 10C3.5 9.5 5.5 7.5 5.5 7.5Z M12 10C15.31 10 18 12.69 18 16C18 19.31 15.31 22 12 22C8.69 22 6 19.31 6 16C6 12.69 8.69 10 12 10Z M12 12C9.79 12 8 13.79 8 16C8 18.21 9.79 20 12 20C14.21 20 16 18.21 16 16C16 13.79 14.21 12 12 12Z"/>
+            </svg>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="step-card" onclick="toggleDetails(this)">
+            <h2>STEP 3</h2>
+            <h3>Produksi Konten Palsu</h3>
+            <div class="details">
+                <ul>
+                    <li>Konten seksual deepfake</li>
+                    <li>Video kompromi</li>
+                    <li>Identitas palsu (nama + foto korban)</li>
+                    <li>Ujaran atau tindakan yang tidak pernah korban lakukan</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="arrow-container">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C12 2 13 5 13 6C13 7 12 8 12 8C12 8 11 7 11 6C11 5 12 2 12 2Z M18.5 7.5C18.5 7.5 20.5 9.5 21 10C21.5 10.5 21 11 21 11C21 11 20.5 11.5 20 11C19.5 10.5 17.5 8.5 17.5 8.5C17.5 8.5 18 8 18.5 7.5Z M5.5 7.5C6 8 6.5 8.5 6.5 8.5C6.5 8.5 4.5 10.5 4 11C3.5 11.5 3 11 3 11C3 11 2.5 10.5 3 10C3.5 9.5 5.5 7.5 5.5 7.5Z M12 10C15.31 10 18 12.69 18 16C18 19.31 15.31 22 12 22C8.69 22 6 19.31 6 16C6 12.69 8.69 10 12 10Z M12 12C9.79 12 8 13.79 8 16C8 18.21 9.79 20 12 20C14.21 20 16 18.21 16 16C16 13.79 14.21 12 12 12Z"/>
+            </svg>
+        </div>
+
+        <!-- STEP 4 -->
+        <div class="step-card" onclick="toggleDetails(this)">
+            <h2>STEP 4</h2>
+            <h3>Distribusi & Ancaman</h3>
+            <div class="details">
+                <ul>
+                    <li>Disebar via Telegram, WhatsApp, Google Form, grup anonim</li>
+                    <li>Digunakan untuk:
+                        <ul>
+                            <li><strong>Sextortion</strong> (pemerasan seksual)</li>
+                            <li>Penyebaran NCII</li>
+                            <li>Fitnah publik</li>
+                            <li>Doxing</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="arrow-container">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C12 2 13 5 13 6C13 7 12 8 12 8C12 8 11 7 11 6C11 5 12 2 12 2Z M18.5 7.5C18.5 7.5 20.5 9.5 21 10C21.5 10.5 21 11 21 11C21 11 20.5 11.5 20 11C19.5 10.5 17.5 8.5 17.5 8.5C17.5 8.5 18 8 18.5 7.5Z M5.5 7.5C6 8 6.5 8.5 6.5 8.5C6.5 8.5 4.5 10.5 4 11C3.5 11.5 3 11 3 11C3 11 2.5 10.5 3 10C3.5 9.5 5.5 7.5 5.5 7.5Z M12 10C15.31 10 18 12.69 18 16C18 19.31 15.31 22 12 22C8.69 22 6 19.31 6 16C6 12.69 8.69 10 12 10Z M12 12C9.79 12 8 13.79 8 16C8 18.21 9.79 20 12 20C14.21 20 16 18.21 16 16C16 13.79 14.21 12 12 12Z"/>
+            </svg>
+        </div>
+
+        <!-- STEP 5 -->
+        <div class="step-card" onclick="toggleDetails(this)">
+            <h2>STEP 5</h2>
+            <h3>Dampak pada Korban</h3>
+            <div class="details">
+                <ul>
+                    <li>Reputasi hancur</li>
+                    <li>Tekanan psikologis & trauma</li>
+                    <li>Beban pembuktian bahwa konten tersebut palsu</li>
+                    <li>Stigma sosial yang berat terhadap perempuan</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fungsi untuk membuka atau menutup detail kartu yang diklik
+        function toggleDetails(clickedCard) {
+            const clickedDetails = clickedCard.querySelector('.details');
+            
+            // Cek apakah kartu yang diklik sudah terbuka
+            const isAlreadyOpen = clickedCard.classList.contains('active');
+            
+            if (isAlreadyOpen) {
+                // Jika sudah terbuka, tutup kartu tersebut
+                clickedDetails.style.maxHeight = '0px';
+                clickedDetails.style.paddingTop = '0';
+                clickedDetails.style.paddingBottom = '0';
+                clickedCard.classList.remove('active');
+            } else {
+                // Jika belum terbuka, buka kartu tersebut
+                clickedDetails.style.maxHeight = clickedDetails.scrollHeight + "px";
+                clickedDetails.style.paddingTop = '15px';
+                clickedDetails.style.paddingBottom = '5px';
+                clickedCard.classList.add('active');
+            }
+        }
+    </script>
+
+</body>
+</html>
