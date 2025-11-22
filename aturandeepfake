@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analisis Regulasi Deepfake di Indonesia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #fef7f7;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 25px;
+            background: linear-gradient(135deg, #b71c1c 0%, #d32f2f 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(183, 28, 28, 0.2);
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(183, 28, 28, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            border-top: 4px solid #d32f2f;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(183, 28, 28, 0.15);
+        }
+        
+        .card-header {
+            padding: 20px;
+            border-bottom: 1px solid #f5e1e1;
+        }
+        
+        .card-title {
+            font-size: 1.4rem;
+            color: #b71c1c;
+            margin-bottom: 5px;
+        }
+        
+        .card-subtitle {
+            font-size: 0.9rem;
+            color: #d32f2f;
+            font-weight: 500;
+        }
+        
+        .card-body {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .info-section {
+            margin-bottom: 20px;
+        }
+        
+        .info-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .info-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #b71c1c;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .info-content {
+            font-size: 0.95rem;
+            color: #444;
+        }
+        
+        .info-content ul {
+            padding-left: 20px;
+            margin-top: 5px;
+        }
+        
+        .info-content li {
+            margin-bottom: 5px;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .status-not-effective {
+            background-color: #ffebee;
+            color: #b71c1c;
+            border: 1px solid #ffcdd2;
+        }
+        
+        .status-weak {
+            background-color: #ffebee;
+            color: #c62828;
+            border: 1px solid #ffcdd2;
+        }
+        
+        .status-selective {
+            background-color: #ffebee;
+            color: #b71c1c;
+            border: 1px solid #ffcdd2;
+        }
+        
+        .status-none {
+            background-color: #f5f5f5;
+            color: #b71c1c;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .status-slow {
+            background-color: #ffebee;
+            color: #d32f2f;
+            border: 1px solid #ffcdd2;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+            border-top: 1px solid #ffcdd2;
+        }
+        
+        @media (max-width: 768px) {
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Analisis Regulasi Terkait Deepfake Non-Consensual di Indonesia</h1>
+            <p class="subtitle">Tinjauan terhadap kerangka hukum yang relevan untuk menangani penyalahgunaan teknologi deepfake</p>
+        </header>
+        
+        <div class="cards-container">
+            <!-- Card 1: UU PDP -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">UU 27/2022 tentang Pelindungan Data Pribadi (UU PDP)</h2>
+                    <p class="card-subtitle">Pasal 4, 13, 18, 20, 65</p>
+                </div>
+                <div class="card-body">
+                    <div class="info-section">
+                        <div class="info-label">Pokok Pengaturan</div>
+                        <div class="info-content">
+                            <ul>
+                                <li>Wajah & suara dikategorikan sebagai <strong>data biometrik</strong> (data pribadi spesifik)</li>
+                                <li>Mengatur <strong>hak untuk menghapus</strong> dan <strong>membatasi pemrosesan</strong> data pribadi</li>
+                                <li>Melarang pemrosesan data pribadi tanpa <strong>dasar hukum</strong> yang sah</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="info-section">
+                        <div class="info-label">Relevansi dengan Deepfake</div>
+                        <div class="info-content">
+                            Pembuatan deepfake memproses data biometrik (wajah/suara) tanpa izin, sehingga melanggar hak privasi dan merupakan pemrosesan yang ilegal.
+                        </div>
+                    </div>
+                    <div class="info-section">
+                        <div class="info-label">Status Implementasi & Tantangan</div>
+                        <div class="info-content">
+                            <span class="status-badge status-not-effective">Belum Efektif</span>
+                            <span class="status-badge status-none">Belum Ada BPDP</span>
+                            <p>Peraturan pelaksana (PP) belum diterbitkan. Lembaga pengawas (Badan Pelindungan Data Pribadi) belum dibentuk. Mekanisme pengaduan dan penegakan hukum belum berjalan.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Card 2: UU TPKS -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">UU 12/2022 tentang Tindak Pidana Kekerasan Seksual (UU TPKS)</h2>
+                    <p class="card-subtitle">Pasal 14–17, 27, 29</p>
+                </div>
+                <div class="card-body">
+                    <div class="info-section">
+                        <div class="info-label">Pokok Pengaturan</div>
+                        <div class="info-content">
+                            <ul>
+                                <li>Menjerat <strong>Kekerasan Seksual Berbasis Elektronik (KSBE)</strong></li>
+                                <li>Memberikan hak kepada korban untuk <strong>pemulihan, pendampingan, dan penghapusan (takedown) konten</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="info-section">
+                        <div class="info-label">Relevansi dengan Deepfake</div>
+                        <div class="info-content">
+                            Deepfake dengan muatan seksual merupakan bentuk KSBE yang dapat dipidana. Hak takedown memberikan jalan bagi korban untuk membatasi penyebaran.
+                        </div>
+                    </div>
+                    <div class="info-section">
+                        <div class="info-label">Status Implementasi & Tantangan</div>
+                        <div class="info-content">
+                            <span class="status-badge status-weak">Implementasi Lemah</span>
+                            <span class="status-badge status-slow">Proses Lambat</span>
+                            <p>Implementasi masih lemah di lapangan. Proses takedown konten masih sulit dan lambat. Kebingungan prosedur: korban sering diminta lapor polisi terlebih dahulu, padahal hak takedown tidak bergantung pada proses hukum pidana.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Card 3: UU ITE -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">UU 11/2008 jo. UU 19/2016 tentang ITE</h2>
+                    <p class="card-subtitle">Pasal 27 Ayat (1), Pasal 27 Ayat (3), Pasal 28 Ayat (1)</p>
+                </div>
+                <div class="card-body">
+                    <div class="info-section">
+                        <div class="info-label">Pokok Pengaturan</div>
+                        <div class="info-content">
+                            <ul>
+                                <li>Larangan distribusi konten melanggar <strong>kesusilaan</strong></li>
+                                <li>Larangan <strong>pencemaran nama baik</strong></li>
+                                <li>Larangan penyebaran <strong>berita bohong</strong> yang meresahkan</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="info-section">
+                        <div class="info-label">Relevansi dengan Deepfake</div>
+                        <div class="info-content">
+                            Deepfake sering kali masuk dalam kategori konten kesusilaan, pencemaran nama baik, atau disinformasi, sehingga dapat dijangkau oleh UU ini.
+                        </div>
+                    </div>
+                    <div class="info-section">
+                        <div class="info-label">Status Implementasi & Tantangan</div>
+                        <div class="info-content">
+                            <span class="status-badge status-selective">Penggunaan Selektif</span>
+                            <span class="status-badge status-none">Tidak Ada Pencegahan</span>
+                            <p>Pasal disinformasi cenderung digunakan secara selektif, terutama untuk kasus politik. Sering disalahgunakan untuk membungkam kritik, bukan melindungi korban deepfake. Hanya bersifat responsif (kriminalisasi) tanpa mekanisme pencegahan.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Card 4: Regulasi Platform -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Regulasi Platform (Kebijakan Internal)</h2>
+                    <p class="card-subtitle">—</p>
+                </div>
+                <div class="card-body">
+                    <div class="info-section">
+                        <div class="info-label">Pokok Pengaturan</div>
+                        <div class="info-content">
+                            <ul>
+                                <li><strong>Moderasi konten</strong> berdasarkan pedoman komunitas</li>
+                                <li>Kebijakan khusus terhadap <strong>konten intim non-konsensual</strong> dan deepfake</li>
+                                <li>Mekanisme pelaporan dan penghapusan konten</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="info-section">
+                        <div class="info-label">Relevansi dengan Deepfake</div>
+                        <div class="info-content">
+                            Merupakan garis pertahanan pertama untuk menghapus konten deepfake secara cepat dari media sosial dan ruang digital.
+                        </div>
+                    </div>
+                    <div class="info-section">
+                        <div class="info-label">Status Implementasi & Tantangan</div>
+                        <div class="info-content">
+                            <span class="status-badge status-slow">Respons Lambat</span>
+                            <span class="status-badge status-none">Konflik Kepentingan</span>
+                            <p>Respons platform sering lambat dan tidak konsisten. Moderator seringkali tidak memahami konteks dan bahasa daerah Indonesia. Konflik kepentingan: Model bisnis platform mengutamakan engagement, yang dapat bertentangan dengan penghapusan konten viral.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>2025, Konde.co | Diolah dari wawancara serial #StopMisoginiTeknologi</p>
+        </footer>
+    </div>
+</body>
+</html>
