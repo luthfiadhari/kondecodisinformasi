@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLITCH: Kisah Kinah Jurnalis Diteror</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        :root {
+            --bg-color: #1a1a2e;
+            --ui-bg: #16213e;
+            --text-color: #eee;
+            --primary-color: #0f3460;
+            --accent-color: #e94560;
+            --warning-color: #ff9800;
+            --glitch-red: #ff0000;
+            --glitch-blue: #00ffff;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 10px;
+        }
+
+        #story-container {
+            width: 95%;
+            max-width: 900px;
+            height: 95vh;
+            border: 4px solid var(--primary-color);
+            background-color: var(--ui-bg);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 20px rgba(233, 69, 96, 0.5);
+            position: relative;
+        }
+
+        /* --- HEADER SECTION --- */
+        #header-section {
+            background-color: var(--primary-color);
+            padding: 12px 15px;
+            border-bottom: 4px solid var(--text-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        #header-title {
+            color: var(--warning-color);
+            font-size: 14px;
+            margin: 0;
+            text-align: center;
+            flex: 1;
+        }
+
+        /* --- NAVIGATION CONTROLS --- */
+        .nav-controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background-color: var(--accent-color);
+            color: var(--text-color);
+            border: none;
+            padding: 10px 12px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 3px solid var(--text-color);
+            border-radius: 6px;
+            min-width: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background-color: #c73650;
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .nav-btn:disabled {
+            background-color: #666;
+            cursor: not-allowed;
+            transform: none;
+            opacity: 0.5;
+        }
+
+        /* Progress indicator */
+        .progress-indicator {
+            text-align: center;
+            font-size: 10px;
+            color: var(--warning-color);
+            padding: 6px 10px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+            border: 2px solid var(--text-color);
+        }
+
+        /* --- SCENE DISPLAY --- */
+        #scene-display {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scene {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            width: 100%;
+        }
+
+        .scene.active {
+            display: flex;
+        }
+
+        #scene-title {
+            color: var(--warning-color);
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        #character-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 150px;
+            margin-bottom: 15px;
+        }
+
+        .character {
+            font-size: 70px;
+            user-select: none;
+            transition: transform 0.3s;
+        }
+
+        .character.sad { filter: grayscale(100%) brightness(0.7); }
+        .character.angry { filter: hue-rotate(320deg) saturate(1.5); }
+        .character.hopeful { filter: brightness(1.2) saturate(1.5); }
+
+        /* --- DIALOGUE BOX --- */
+        #dialogue-box {
+            background-color: rgba(15, 52, 96, 0.8);
+            border: 4px solid var(--text-color);
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            line-height: 1.6;
+            min-height: 200px;
+            overflow: hidden;
+        }
+
+        #dialogue-box p {
+            margin: 8px 0;
+            font-size: 11px;
+        }
+        
+        #dialogue-box p.speaker {
+            color: var(--warning-color);
+            margin-bottom: 12px;
+        }
+
+        /* --- SPECIAL EFFECTS --- */
+        .glitch {
+            animation: glitch-anim 0.5s infinite;
+        }
+
+        @keyframes glitch-anim {
+            0% {
+                text-shadow: 0.05em 0 0 var(--glitch-red), -0.05em -0.025em 0 var(--glitch-blue);
+                transform: translate(2px, -2px);
+            }
+            15% {
+                text-shadow: 0.05em 0 0 var(--glitch-red), -0.05em -0.025em 0 var(--glitch-blue);
+                transform: translate(-2px, 2px);
+            }
+            16% {
+                text-shadow: -0.05em -0.025em 0 var(--glitch-red), 0.025em 0.025em 0 var(--glitch-blue);
+            }
+            49% {
+                text-shadow: -0.05em -0.025em 0 var(--glitch-red), 0.025em 0.025em 0 var(--glitch-blue);
+            }
+            50% {
+                text-shadow: 0.025em 0.05em 0 var(--glitch-red), 0.05em 0 0 var(--glitch-blue);
+                transform: translate(2px, 2px);
+            }
+            99% {
+                text-shadow: 0.025em 0.05em 0 var(--glitch-red), 0.05em 0 0 var(--glitch-blue);
+                transform: translate(2px, 2px);
+            }
+            100% {
+                text-shadow: -0.025em 0 0 var(--glitch-red), -0.025em -0.025em 0 var(--glitch-blue);
+                transform: translate(0, 0);
+            }
+        }
+
+        .game-over {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .game-over h2 {
+            color: var(--accent-color);
+            font-size: 24px;
+        }
+
+        .game-over p {
+            margin-top: 15px;
+            color: var(--warning-color);
+            font-size: 12px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+            
+            #story-container {
+                width: 100%;
+                height: 90vh;
+            }
+            
+            .nav-btn {
+                padding: 8px 10px;
+                font-size: 14px;
+                min-width: 45px;
+            }
+            
+            .character {
+                font-size: 60px;
+            }
+            
+            #dialogue-box {
+                padding: 12px;
+            }
+            
+            #header-title {
+                font-size: 12px;
+            }
+            
+            .progress-indicator {
+                font-size: 9px;
+                padding: 5px 8px;
+            }
+            
+            #dialogue-box p {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="story-container">
+        <!-- Header dengan Navigasi -->
+        <div id="header-section">
+            <button id="prev-btn" class="nav-btn" disabled>⬅️</button>
+            
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1;">
+                <div id="header-title">KINAH: JURNALIS YANG DITEROR KARENA BERITA</div>
+                <div class="progress-indicator">
+                    Adegan <span id="current-scene">1</span> dari <span id="total-scenes">14</span>
+                </div>
+            </div>
+            
+            <button id="next-btn" class="nav-btn">➡️</button>
+        </div>
+
+        <div id="scene-display">
+            <!-- Slide 1 -->
+            <div id="scene1" class="scene active">
+                <h2 id="scene-title">PENGENALAN KINAH</h2>
+                <div id="character-area">
+                    <div class="character hopeful">👩🏽‍💼</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Kinah adalah seorang jurnalis di Sulawesi Selatan.</p>
+                    <p>Selama bertahun-tahun, ia meliput isu lingkungan: pengerukan sungai, penyelundupan solar ilegal, hingga praktik kotor yang melibatkan aparat.</p>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div id="scene2" class="scene">
+                <h2 id="scene-title">PENGENALAN KINAH</h2>
+                <div id="character-area">
+                    <div class="character">📰</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Ia tahu pekerjaannya berisiko.</p>
+                    <p>Tekanan sudah seperti bayangan yang mengikutinya.</p>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div id="scene3" class="scene">
+                <h2 id="scene-title">"BERITA KRITIS SELALU ADA EFEKNYA"</h2>
+                <div id="character-area">
+                    <div class="character sad">👩🏽‍💼</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Setiap kali ia menulis berita kontra (kritis), ia sudah menyiapkan mental.</p>
+                    <p class="speaker">Kinah:</p>
+                    <p>"Hampir setiap pemberitaan kontra itu pasti ada efeknya. Yang paling sering fitnah soal suap."</p>
+                    <p>Fitnah itu menggerus ketenangan kerjanya, mempengaruhi kesehatan mentalnya.</p>
+                </div>
+            </div>
+
+            <!-- Slide 4 -->
+            <div id="scene4" class="scene">
+                <h2 id="scene-title">ANCAMAN MENGETUK DI DEPAN PINTU</h2>
+                <div id="character-area">
+                    <div class="character angry">🚪</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Kinah paham: Di daerah, ancaman digital sering berubah menjadi intimidasi fisik.</p>
+                    <p class="speaker">Kinah:</p>
+                    <p>"Fitnah itu seringnya berkembang jadi ancaman yang nyata."</p>
+                    <p>Ia pernah mengalaminya berulang kali.</p>
+                </div>
+            </div>
+
+            <!-- Slide 5 -->
+            <div id="scene5" class="scene">
+                <h2 id="scene-title">LIPUTAN SOLAR ILEGAL: AWAL TEROR BARU</h2>
+                <div id="character-area">
+                    <div class="character" id="glitch-target">⛽</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Dalam kasus solar ilegal yang ia liput empat kali, situasi makin memanas.</p>
+                    <p>Setelah berita keempat terbit, ia mendapat telepon dari seorang pengusaha yang merasa dirugikan.</p>
+                    <p class="speaker">Kinah:</p>
+                    <p>"Dia lontarkan kata-kata keras, kasar, mengancam."</p>
+                </div>
+            </div>
+
+            <!-- Slide 6 -->
+            <div id="scene6" class="scene">
+                <h2 id="scene-title">WHATSAPP DIPENUHI ANCAMAN</h2>
+                <div id="character-area">
+                    <div class="character glitch">📱</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Beberapa jam setelah telepon, serangan itu berlanjut ke pesan teks.</p>
+                    <p class="speaker">Kinah:</p>
+                    <p>"Chat-nya kasar, keras, mengintimidasi."</p>
+                    <p>Ancaman itu menjadi teror yang terstruktur dan terus menggedor notifikasinya.</p>
+                </div>
+            </div>
+
+            <!-- Slide 7 -->
+            <div id="scene7" class="scene">
+                <h2 id="scene-title">TEROR MENYEBRANG KE DUNIA NYATA</h2>
+                <div id="character-area">
+                    <div class="character sad">🏠</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Tak lama kemudian, orang suruhan pengusaha itu datang ke rumahnya.</p>
+                    <p class="speaker">Kinah:</p>
+                    <p>"Saya lihat mobilnya. Untung saya tidak ketemu. Saya langsung putar balik ke kantor polisi minta perlindungan."</p>
+                    <p>Saat itu ia menyadari bahwa ancaman digital telah berubah menjadi ancaman fisik.</p>
+                </div>
+            </div>
+
+            <!-- Slide 8 -->
+            <div id="scene8" class="scene">
+                <h2 id="scene-title">ENAM BULAN BERHENTI, LALU KEMBALI LIPUTAN</h2>
+                <div id="character-area">
+                    <div class="character">👩🏽‍💼</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Kinah sempat berhenti menulis. Namun kasus solar ilegal masih belum tuntas.</p>
+                    <p class="speaker">Kinah:</p>
+                    <p>"Menurut saya belum selesai."</p>
+                    <p>Ia kembali liputan dengan hati-hati, menyamar, tak membawa peralatan mencolok, hanya memakai kamera ponsel.</p>
+                </div>
+            </div>
+
+            <!-- Slide 9 -->
+            <div id="scene9" class="scene">
+                <h2 id="scene-title">DIIKUTI MOBIL MISTERIUS</h2>
+                <div id="character-area">
+                    <div class="character angry">🚗</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Namun rasa aman tidak pernah kembali.</p>
+                    <p class="speaker">Kinah:</p>
+                    <p>"Saya merasa diikuti beberapa mobil saat pulang dari lokasi liputan."</p>
+                    <p>Ia kembali berhenti menulis, dan sampai hari ini belum berani melanjutkan liputan itu.</p>
+                </div>
+            </div>
+
+            <!-- Slide 10 -->
+            <div id="scene10" class="scene">
+                <h2 id="scene-title">BUKAN PERTAMA KALI: PENGERUKAN SUNGAI</h2>
+                <div id="character-area">
+                    <div class="character sad">🌊</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Sebelum kasus solar, ia juga diancam saat meliput pengerukan sungai oleh seorang kepala desa.</p>
+                    <p>Kepala desa itu menelepon dan mengirim pesan kasar melalui WhatsApp.</p>
+                    <p>Kasusnya akhirnya masuk pengadilan dan kepala desa itu dipenjara.</p>
+                </div>
+            </div>
+
+            <!-- Slide 11 -->
+            <div id="scene11" class="scene">
+                <h2 id="scene-title">FITNAH SUAP: TEKANAN YANG TAK PERNAH HILANG</h2>
+                <div id="character-area">
+                    <div class="character angry">💰</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Di luar ancaman fisik, Kinah juga menghadapi fitnah bahwa ia menerima suap.</p>
+                    <p class="speaker">Kinah:</p>
+                    <p>"Fitnah itu cepat sekali menyebar. Sampai polisi pun sempat konfirmasi ke saya."</p>
+                    <p>Ia membantah keras—tapi kabar miring itu terus hidup dari mulut ke mulut.</p>
+                </div>
+            </div>
+
+            <!-- Slide 12 -->
+            <div id="scene12" class="scene">
+                <h2 id="scene-title">POLISI, INTIMIDASI, DAN "PERTEMUAN YANG ANEH"</h2>
+                <div id="character-area">
+                    <div class="character angry">👮</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Yang membuat Kinah makin goyah adalah pengalaman buruk dengan aparat.</p>
+                    <p>Seorang oknum intel pernah menyampaikan bahwa ada "titipan uang" untuknya dari pengusaha solar yang ia tolak mentah-mentah.</p>
+                    <p class="speaker">Kinah:</p>
+                    <p>"Saya pernah dipertemukan oleh polisi dengan pengusaha solar itu tanpa diberi tahu."</p>
+                    <p>Baginya, itu bentuk intimidasi yang nyata.</p>
+                </div>
+            </div>
+
+            <!-- Slide 13 (Dipisah menjadi bagian 1) -->
+            <div id="scene13" class="scene">
+                <h2 id="scene-title">LAPORAN? TIDAK. PERLINDUNGAN? YA.</h2>
+                <div id="character-area">
+                    <div class="character sad">👩🏽‍💼</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Ketika ditanya apakah ia pernah membuat laporan resmi, jawabannya:</p>
+                    <p class="speaker">Kinah:</p>
+                    <p>"Nggak pernah. Saya ke kantor polisi cuma minta perlindungan."</p>
+                </div>
+            </div>
+
+            <!-- Slide 14 (Dipisah menjadi bagian 2) -->
+            <div id="scene14" class="scene">
+                <h2 id="scene-title">LAPORAN? TIDAK. PERLINDUNGAN? YA.</h2>
+                <div id="character-area">
+                    <div class="character hopeful">🏢</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Alasannya kuat. Ia tak lagi percaya sistem dan hanya merasa perlu berjaga-jaga.</p>
+                    <p class="speaker">Kinah:</p>
+                    <p>"Saya mau percaya tidak percaya dengan polisi… backing-nya ya mereka."</p>
+                    <p>Dalam situasi seperti itu, redaksinya adalah satu-satunya tempat aman.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data semua adegan
+        const scenes = [
+            { id: 'scene1', title: 'PENGENALAN KINAH' },
+            { id: 'scene2', title: 'PENGENALAN KINAH' },
+            { id: 'scene3', title: '"BERITA KRITIS SELALU ADA EFEKNYA"' },
+            { id: 'scene4', title: 'ANCAMAN MENGETUK DI DEPAN PINTU' },
+            { id: 'scene5', title: 'LIPUTAN SOLAR ILEGAL: AWAL TEROR BARU', glitch: true },
+            { id: 'scene6', title: 'WHATSAPP DIPENUHI ANCAMAN' },
+            { id: 'scene7', title: 'TEROR MENYEBRANG KE DUNIA NYATA' },
+            { id: 'scene8', title: 'ENAM BULAN BERHENTI, LALU KEMBALI LIPUTAN' },
+            { id: 'scene9', title: 'DIIKUTI MOBIL MISTERIUS' },
+            { id: 'scene10', title: 'BUKAN PERTAMA KALI: PENGERUKAN SUNGAI' },
+            { id: 'scene11', title: 'FITNAH SUAP: TEKANAN YANG TAK PERNAH HILANG' },
+            { id: 'scene12', title: 'POLISI, INTIMIDASI, DAN "PERTEMUAN YANG ANEH"' },
+            { id: 'scene13', title: 'LAPORAN? TIDAK. PERLINDUNGAN? YA.' },
+            { id: 'scene14', title: 'LAPORAN? TIDAK. PERLINDUNGAN? YA.' }
+        ];
+
+        let currentSceneIndex = 0;
+
+        // Elemen UI
+        const nextBtn = document.getElementById('next-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const sceneTitle = document.getElementById('scene-title');
+        const currentSceneSpan = document.getElementById('current-scene');
+        const totalScenesSpan = document.getElementById('total-scenes');
+
+        // Inisialisasi
+        totalScenesSpan.textContent = scenes.length;
+
+        function showScene(index) {
+            // Validasi indeks
+            if (index < 0 || index >= scenes.length) return;
+            
+            // Update indeks adegan saat ini
+            currentSceneIndex = index;
+            
+            // Sembunyikan semua adegan
+            document.querySelectorAll('.scene').forEach(scene => {
+                scene.classList.remove('active');
+            });
+
+            // Tampilkan adegan saat ini
+            const currentSceneData = scenes[index];
+            const currentSceneElement = document.getElementById(currentSceneData.id);
+            currentSceneElement.classList.add('active');
+            
+            // Update judul
+            sceneTitle.textContent = currentSceneData.title;
+
+            // Terapkan efek glitch jika diperlukan
+            if (currentSceneData.glitch) {
+                const glitchTarget = document.getElementById('glitch-target');
+                if (glitchTarget) {
+                    // Reset glitch effect
+                    glitchTarget.classList.remove('glitch');
+                    setTimeout(() => {
+                        glitchTarget.classList.add('glitch');
+                    }, 100);
+                }
+            }
+
+            // Update status tombol navigasi
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === scenes.length - 1;
+            
+            // Update indikator progress
+            currentSceneSpan.textContent = index + 1;
+
+            // Update teks tombol di adegan terakhir
+            if (index === scenes.length - 1) {
+                nextBtn.textContent = '🏁';
+            } else {
+                nextBtn.textContent = '➡️';
+            }
+        }
+
+        // Event listeners untuk navigasi
+        nextBtn.addEventListener('click', () => {
+            if (currentSceneIndex < scenes.length - 1) {
+                showScene(currentSceneIndex + 1);
+            } else {
+                // Tampilkan pesan akhir
+                alert('Terima kasih telah mengikuti kisah Kinah. Kisahnya mewakili banyak jurnalis yang menghadapi intimidasi dan teror karena menjalankan tugas jurnalistik mereka.');
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentSceneIndex > 0) {
+                showScene(currentSceneIndex - 1);
+            }
+        });
+
+        // Tambahkan navigasi keyboard
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Spacebar') {
+                // Tombol panah kanan atau spasi untuk maju
+                e.preventDefault();
+                if (currentSceneIndex < scenes.length - 1) {
+                    showScene(currentSceneIndex + 1);
+                }
+            } else if (e.key === 'ArrowLeft') {
+                // Tombol panah kiri untuk mundur
+                e.preventDefault();
+                if (currentSceneIndex > 0) {
+                    showScene(currentSceneIndex - 1);
+                }
+            }
+        });
+
+        // Inisialisasi adegan pertama
+        showScene(currentSceneIndex);
+    </script>
+</body>
+</html>
