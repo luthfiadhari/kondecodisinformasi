@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLITCH: Kisah Citra Korban Disinformasi</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        :root {
+            --bg-color: #1a1a2e;
+            --ui-bg: #16213e;
+            --text-color: #eee;
+            --primary-color: #0f3460;
+            --accent-color: #e94560;
+            --warning-color: #ff9800;
+            --glitch-red: #ff0000;
+            --glitch-blue: #00ffff;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 10px;
+        }
+
+        #story-container {
+            width: 95%;
+            max-width: 900px;
+            height: 95vh;
+            border: 4px solid var(--primary-color);
+            background-color: var(--ui-bg);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 20px rgba(233, 69, 96, 0.5);
+            position: relative;
+        }
+
+        /* --- HEADER SECTION --- */
+        #header-section {
+            background-color: var(--primary-color);
+            padding: 12px 15px;
+            border-bottom: 4px solid var(--text-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        #header-title {
+            color: var(--warning-color);
+            font-size: 14px;
+            margin: 0;
+            text-align: center;
+            flex: 1;
+        }
+
+        /* --- NAVIGATION CONTROLS --- */
+        .nav-controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background-color: var(--accent-color);
+            color: var(--text-color);
+            border: none;
+            padding: 10px 12px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 3px solid var(--text-color);
+            border-radius: 6px;
+            min-width: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background-color: #c73650;
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .nav-btn:disabled {
+            background-color: #666;
+            cursor: not-allowed;
+            transform: none;
+            opacity: 0.5;
+        }
+
+        /* Progress indicator */
+        .progress-indicator {
+            text-align: center;
+            font-size: 10px;
+            color: var(--warning-color);
+            padding: 6px 10px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+            border: 2px solid var(--text-color);
+        }
+
+        /* --- SCENE DISPLAY --- */
+        #scene-display {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scene {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            width: 100%;
+        }
+
+        .scene.active {
+            display: flex;
+        }
+
+        #scene-title {
+            color: var(--warning-color);
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        #character-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 150px;
+            margin-bottom: 15px;
+        }
+
+        .character {
+            font-size: 70px;
+            user-select: none;
+            transition: transform 0.3s;
+        }
+
+        .character.sad { filter: grayscale(100%) brightness(0.7); }
+        .character.angry { filter: hue-rotate(320deg) saturate(1.5); }
+        .character.hopeful { filter: brightness(1.2) saturate(1.5); }
+
+        /* --- DIALOGUE BOX --- */
+        #dialogue-box {
+            background-color: rgba(15, 52, 96, 0.8);
+            border: 4px solid var(--text-color);
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            line-height: 1.6;
+            min-height: 200px;
+            overflow: hidden;
+        }
+
+        #dialogue-box p {
+            margin: 8px 0;
+            font-size: 11px;
+        }
+        
+        #dialogue-box p.speaker {
+            color: var(--warning-color);
+            margin-bottom: 12px;
+        }
+
+        /* --- SPECIAL EFFECTS --- */
+        .glitch {
+            animation: glitch-anim 0.5s infinite;
+        }
+
+        @keyframes glitch-anim {
+            0% {
+                text-shadow: 0.05em 0 0 var(--glitch-red), -0.05em -0.025em 0 var(--glitch-blue);
+                transform: translate(2px, -2px);
+            }
+            15% {
+                text-shadow: 0.05em 0 0 var(--glitch-red), -0.05em -0.025em 0 var(--glitch-blue);
+                transform: translate(-2px, 2px);
+            }
+            16% {
+                text-shadow: -0.05em -0.025em 0 var(--glitch-red), 0.025em 0.025em 0 var(--glitch-blue);
+            }
+            49% {
+                text-shadow: -0.05em -0.025em 0 var(--glitch-red), 0.025em 0.025em 0 var(--glitch-blue);
+            }
+            50% {
+                text-shadow: 0.025em 0.05em 0 var(--glitch-red), 0.05em 0 0 var(--glitch-blue);
+                transform: translate(2px, 2px);
+            }
+            99% {
+                text-shadow: 0.025em 0.05em 0 var(--glitch-red), 0.05em 0 0 var(--glitch-blue);
+                transform: translate(2px, 2px);
+            }
+            100% {
+                text-shadow: -0.025em 0 0 var(--glitch-red), -0.025em -0.025em 0 var(--glitch-blue);
+                transform: translate(0, 0);
+            }
+        }
+
+        .game-over {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .game-over h2 {
+            color: var(--accent-color);
+            font-size: 24px;
+        }
+
+        .game-over p {
+            margin-top: 15px;
+            color: var(--warning-color);
+            font-size: 12px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+            
+            #story-container {
+                width: 100%;
+                height: 90vh;
+            }
+            
+            .nav-btn {
+                padding: 8px 10px;
+                font-size: 14px;
+                min-width: 45px;
+            }
+            
+            .character {
+                font-size: 60px;
+            }
+            
+            #dialogue-box {
+                padding: 12px;
+            }
+            
+            #header-title {
+                font-size: 12px;
+            }
+            
+            .progress-indicator {
+                font-size: 9px;
+                padding: 5px 8px;
+            }
+            
+            #dialogue-box p {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="story-container">
+        <!-- Header dengan Navigasi -->
+        <div id="header-section">
+            <button id="prev-btn" class="nav-btn" disabled>⬅️</button>
+            
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1;">
+                <div id="header-title">CITRA: QUEER KORBAN EFEK DOMINO DISINFORMASI</div>
+                <div class="progress-indicator">
+                    Adegan <span id="current-scene">1</span> dari <span id="total-scenes">13</span>
+                </div>
+            </div>
+            
+            <button id="next-btn" class="nav-btn">➡️</button>
+        </div>
+
+        <div id="scene-display">
+            <!-- Slide 1 -->
+            <div id="scene1" class="scene active">
+                <h2 id="scene-title">PENGENALAN CITRA</h2>
+                <div id="character-area">
+                    <div class="character hopeful">👩🏻‍🦰</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Citra (bukan nama sebenarnya) adalah seorang mahasiswa di Sulawesi.</p>
+                    <p>Ia aktif menyuarakan isu-isu gender dan komunitas kwir di media sosial dengan tujuan sederhana: berbagi perspektif, membangun empati.</p>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div id="scene2" class="scene">
+                <h2 id="scene-title">PENGENALAN CITRA</h2>
+                <div id="character-area">
+                    <div class="character hopeful">🌈</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Ia tidak pernah menyangka bahwa sebuah notes digital tentang dukungannya pada komunitas kwir akan berujung pada rangkaian fitnah dan kekerasan digital yang mengubah hidupnya.</p>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div id="scene3" class="scene">
+                <h2 id="scene-title">PULANG KULIAH, HIDUP BERUBAH</h2>
+                <div id="character-area">
+                    <div class="character">📱</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Sore itu Citra baru pulang dari kampus. Ponselnya bergetar tanpa henti—sebuah telepon dari temannya.</p>
+                    <p class="speaker">Teman Citra:</p>
+                    <p>"Weh, apa mau bikin ini? Ada gosip terbaru."</p>
+                    <p>Nada suaranya janggal, seakan membawa kabar buruk.</p>
+                </div>
+            </div>
+
+            <!-- Slide 4 -->
+            <div id="scene4" class="scene">
+                <h2 id="scene-title">NOTIFIKASI YANG TAK BERHENTI</h2>
+                <div id="character-area">
+                    <div class="character" id="glitch-target">📱</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Setibanya di kos, Instagram Citra penuh notifikasi.</p>
+                    <p class="speaker">Citra:</p>
+                    <p>"Waktu itu aku kira cuma notifikasi biasa."</p>
+                    <p>Namun DM dan tag dari orang-orang tak dikenal terus berdatangan.</p>
+                </div>
+            </div>
+
+            <!-- Slide 5 -->
+            <div id="scene5" class="scene">
+                <h2 id="scene-title">SERANGAN DIMULAI</h2>
+                <div id="character-area">
+                    <div class="character glitch">👩🏻‍🦰</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Citra mengunci akun, tapi notifikasi makin deras. Follow requests masuk dari belasan akun anonim.</p>
+                    <p>Citra terbiasa mengedukasi soal gender. Kini, ruang yang dulu aman berubah menjadi arena serangan.</p>
+                </div>
+            </div>
+
+            <!-- Slide 6 -->
+            <div id="scene6" class="scene">
+                <h2 id="scene-title">SUMBER KEKACAUAN: NOTES KECIL</h2>
+                <div id="character-area">
+                    <div class="character sad">📝</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Beberapa hari sebelumnya, ia mengunggah notes ringan tentang kebersamaan dengan teman-teman queer yang sekadar ekspresi personal.</p>
+                    <p class="speaker">Citra:</p>
+                    <p>"Gak ada konteks sama sekali kalau aku sedang mengkampanyekan apa pun."</p>
+                    <p>Namun postingan kecil itu dipelintir menjadi bahan fitnah.</p>
+                </div>
+            </div>
+
+            <!-- Slide 7 -->
+            <div id="scene7" class="scene">
+                <h2 id="scene-title">FITNAH MENYEBAR CEPAT</h2>
+                <div id="character-area">
+                    <div class="character angry">👥</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Akun anonim menyebar kabar bohong bahwa Citra menipu orang lain, mengaitkannya dengan identitas gendernya.</p>
+                    <p class="speaker">Citra:</p>
+                    <p>"Mereka bikin story pakai fotoku... 'Jangan percaya orang ini, dia nipu buat dapat uang dari LGBT community!' Aku kaget banget!"</p>
+                    <p>Narasi itu cepat menyebar di lingkungan kampus.</p>
+                </div>
+            </div>
+
+            <!-- Slide 8 -->
+            <div id="scene8" class="scene">
+                <h2 id="scene-title">SERANGAN KE EMAIL KAMPUS</h2>
+                <div id="character-area">
+                    <div class="character angry">📧</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Upaya doxing meningkat. Banyak percobaan login ke email kampus, bahkan serangan ke dosennya.</p>
+                    <p class="speaker">Citra:</p>
+                    <p>"Banyak yang coba masuk ke email ini."</p>
+                    <p>Ruang akademik pun tak lagi aman.</p>
+                </div>
+            </div>
+
+            <!-- Slide 9 -->
+            <div id="scene9" class="scene">
+                <h2 id="scene-title">PENIPUAN: UANG PULUHAN JUTA RAIB</h2>
+                <div id="character-area">
+                    <div class="character sad">💸</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Setelah menarik diri dari media sosial, Citra menerima email yang tampak resmi. Ia mengklik tautannya.</p>
+                    <p class="speaker">Citra:</p>
+                    <p>"Aku pikir itu email beneran, dari universitas."</p>
+                    <p>Beberapa jam kemudian, tabungan bertahun-tahun—<strong>Rp 38 juta</strong>—hilang.</p>
+                    <p class="speaker">Citra:</p>
+                    <p>"Sampai habis 38 juta di hari itu."</p>
+                </div>
+            </div>
+
+            <!-- Slide 10 -->
+            <div id="scene10" class="scene">
+                <h2 id="scene-title">KELELAHAN & HILANGNYA RASA AMAN</h2>
+                <div id="character-area">
+                    <div class="character sad">👩🏻‍🦰</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Trauma menumpuk. Citra berhenti menggunakan media sosial.</p>
+                    <p class="speaker">Citra:</p>
+                    <p>"Aku kehabisan energi. Kehilangan uang itu berat, tapi lebih berat lagi rasanya diserang karena identitasku."</p>
+                    <p>Ia mulai menyembunyikan dirinya: pakaian, gaya bicara, pronoun.</p>
+                </div>
+            </div>
+
+            <!-- Slide 11 -->
+            <div id="scene11" class="scene">
+                <h2 id="scene-title">KAMPUS IKUT TERSERET</h2>
+                <div id="character-area">
+                    <div class="character angry">🏫</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Kampus mengeluarkan merchandise <em>"Voice Has No Gender"</em>. Tapi narasi itu dipelintir sebagai kampanye LGBT.</p>
+                    <p class="speaker">Citra:</p>
+                    <p>"Sudah keburu digoreng isunya dan banyak yang kesulut."</p>
+                    <p>Luka lama Citra kembali terbuka.</p>
+                </div>
+            </div>
+
+            <!-- Slide 12 -->
+            <div id="scene12" class="scene">
+                <h2 id="scene-title">MELAPOR KE POLISI: DITOLAK & DIACUHKAN</h2>
+                <div id="character-area">
+                    <div class="character angry">👮</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Citra mencoba dua laporan:</p>
+                    <p>1) Serangan akun palsu & doxing</p>
+                    <p>2) Kehilangan uang 38 juta</p>
+                    <p>Laporan pertama ditolak mentah-mentah.</p>
+                    <p class="speaker">Polisi:</p>
+                    <p>"Katanya, kita gak bisa ngasih bantuan apapun ke kamu."</p>
+                    <p>Laporan kedua diterima, tapi tidak pernah ditindak.</p>
+                </div>
+            </div>
+
+            <!-- Slide 13 -->
+            <div id="scene13" class="scene">
+                <h2 id="scene-title">SERANGAN BARU, PEMULIHAN PANJANG</h2>
+                <div id="character-area">
+                    <div class="character sad">📞</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Sembilan bulan kemudian, panggilan spam dan DM kasar kembali muncul.</p>
+                    <p class="speaker">Citra:</p>
+                    <p>"Untung aku pasang silence unknown callers."</p>
+                    <p>Citra terus memulihkan diri, meski diakui rasanya lelah seperti mesti harus terus sembunyi.</p>
+                    <p class="speaker">Citra:</p>
+                    <p>"Rasanya kayak harus sembunyi terus."</p>
+                </div>
+            </div>
+
+            <!-- Slide 14 -->
+            <div id="scene14" class="scene">
+                <h2 id="scene-title">PENUTUP: KEBERANIAN UNTUK BERTAHAN</h2>
+                <div id="character-area">
+                    <div class="character hopeful">👩🏻‍🦰</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Serangan terhadap Citra memperlihatkan tumpang tindihnya kebencian identitas kwir dan kejahatan digital.</p>
+                    <p>Meski lelah, ia masih tetap bersuara dan melawan sebaik-baiknya.</p>
+                    <p class="speaker">Citra:</p>
+                    <p>"Aku cuma mau orang tahu... kalau hal kayak gini bisa terjadi ke siapa pun."</p>
+                    <p><strong>Dan jangan mudah percaya pada postingan yang belum jelas kebenarannya.</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data semua adegan
+        const scenes = [
+            { id: 'scene1', title: 'PENGENALAN CITRA' },
+            { id: 'scene2', title: 'PENGENALAN CITRA' },
+            { id: 'scene3', title: 'PULANG KULIAH, HIDUP BERUBAH' },
+            { id: 'scene4', title: 'NOTIFIKASI YANG TAK BERHENTI', glitch: true },
+            { id: 'scene5', title: 'SERANGAN DIMULAI' },
+            { id: 'scene6', title: 'SUMBER KEKACAUAN: NOTES KECIL' },
+            { id: 'scene7', title: 'FITNAH MENYEBAR CEPAT' },
+            { id: 'scene8', title: 'SERANGAN KE EMAIL KAMPUS' },
+            { id: 'scene9', title: 'PENIPUAN: UANG PULUHAN JUTA RAIB' },
+            { id: 'scene10', title: 'KELELAHAN & HILANGNYA RASA AMAN' },
+            { id: 'scene11', title: 'KAMPUS IKUT TERSERET' },
+            { id: 'scene12', title: 'MELAPOR KE POLISI: DITOLAK & DIACUHKAN' },
+            { id: 'scene13', title: 'SERANGAN BARU, PEMULIHAN PANJANG' },
+            { id: 'scene14', title: 'PENUTUP: KEBERANIAN UNTUK BERTAHAN' }
+        ];
+
+        let currentSceneIndex = 0;
+
+        // Elemen UI
+        const nextBtn = document.getElementById('next-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const sceneTitle = document.getElementById('scene-title');
+        const currentSceneSpan = document.getElementById('current-scene');
+        const totalScenesSpan = document.getElementById('total-scenes');
+
+        // Inisialisasi
+        totalScenesSpan.textContent = scenes.length;
+
+        function showScene(index) {
+            // Validasi indeks
+            if (index < 0 || index >= scenes.length) return;
+            
+            // Update indeks adegan saat ini
+            currentSceneIndex = index;
+            
+            // Sembunyikan semua adegan
+            document.querySelectorAll('.scene').forEach(scene => {
+                scene.classList.remove('active');
+            });
+
+            // Tampilkan adegan saat ini
+            const currentSceneData = scenes[index];
+            const currentSceneElement = document.getElementById(currentSceneData.id);
+            currentSceneElement.classList.add('active');
+            
+            // Update judul
+            sceneTitle.textContent = currentSceneData.title;
+
+            // Terapkan efek glitch jika diperlukan
+            if (currentSceneData.glitch) {
+                const glitchTarget = document.getElementById('glitch-target');
+                if (glitchTarget) {
+                    // Reset glitch effect
+                    glitchTarget.classList.remove('glitch');
+                    setTimeout(() => {
+                        glitchTarget.classList.add('glitch');
+                    }, 100);
+                }
+            }
+
+            // Update status tombol navigasi
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === scenes.length - 1;
+            
+            // Update indikator progress
+            currentSceneSpan.textContent = index + 1;
+
+            // Update teks tombol di adegan terakhir
+            if (index === scenes.length - 1) {
+                nextBtn.textContent = '🏁';
+            } else {
+                nextBtn.textContent = '➡️';
+            }
+        }
+
+        // Event listeners untuk navigasi
+        nextBtn.addEventListener('click', () => {
+            if (currentSceneIndex < scenes.length - 1) {
+                showScene(currentSceneIndex + 1);
+            } else {
+                // Tampilkan pesan akhir
+                alert('Terima kasih telah mengikuti kisah Citra. Kisahnya mewakili banyak korban disinformasi dan kekerasan digital yang menargetkan komunitas queer.');
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentSceneIndex > 0) {
+                showScene(currentSceneIndex - 1);
+            }
+        });
+
+        // Tambahkan navigasi keyboard
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Spacebar') {
+                // Tombol panah kanan atau spasi untuk maju
+                e.preventDefault();
+                if (currentSceneIndex < scenes.length - 1) {
+                    showScene(currentSceneIndex + 1);
+                }
+            } else if (e.key === 'ArrowLeft') {
+                // Tombol panah kiri untuk mundur
+                e.preventDefault();
+                if (currentSceneIndex > 0) {
+                    showScene(currentSceneIndex - 1);
+                }
+            }
+        });
+
+        // Inisialisasi adegan pertama
+        showScene(currentSceneIndex);
+    </script>
+</body>
+</html>
