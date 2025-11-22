@@ -15,32 +15,32 @@
         body {
             background-color: #fef7f7;
             color: #333;
-            line-height: 1.6;
-            padding: 20px;
+            line-height: 1.4;
+            padding: 10px;
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
         
         header {
             text-align: center;
-            margin-bottom: 40px;
-            padding: 25px;
+            margin-bottom: 20px;
+            padding: 15px;
             background: linear-gradient(135deg, #b71c1c 0%, #d32f2f 100%);
             color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(183, 28, 28, 0.2);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(183, 28, 28, 0.2);
         }
         
         h1 {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
         }
         
         .subtitle {
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             opacity: 0.9;
             max-width: 800px;
             margin: 0 auto;
@@ -48,53 +48,53 @@
         
         .cards-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
         }
         
         .card {
             background-color: white;
-            border-radius: 12px;
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 6px 15px rgba(183, 28, 28, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 3px 10px rgba(183, 28, 28, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
             display: flex;
             flex-direction: column;
             height: 100%;
-            border-top: 4px solid #d32f2f;
+            border-top: 3px solid #d32f2f;
         }
         
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 20px rgba(183, 28, 28, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(183, 28, 28, 0.15);
         }
         
         .card-header {
-            padding: 20px;
+            padding: 12px;
             border-bottom: 1px solid #f5e1e1;
         }
         
         .card-title {
-            font-size: 1.4rem;
+            font-size: 1.1rem;
             color: #b71c1c;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
         }
         
         .card-subtitle {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #d32f2f;
             font-weight: 500;
         }
         
         .card-body {
-            padding: 20px;
+            padding: 12px;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
         }
         
         .info-section {
-            margin-bottom: 20px;
+            margin-bottom: 12px;
         }
         
         .info-section:last-child {
@@ -102,36 +102,36 @@
         }
         
         .info-label {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             font-weight: 600;
             color: #b71c1c;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         
         .info-content {
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             color: #444;
         }
         
         .info-content ul {
-            padding-left: 20px;
-            margin-top: 5px;
+            padding-left: 15px;
+            margin-top: 3px;
         }
         
         .info-content li {
-            margin-bottom: 5px;
+            margin-bottom: 3px;
         }
         
         .status-badge {
             display: inline-block;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
+            padding: 2px 6px;
+            border-radius: 12px;
+            font-size: 0.7rem;
             font-weight: 600;
-            margin-right: 8px;
-            margin-bottom: 8px;
+            margin-right: 5px;
+            margin-bottom: 5px;
         }
         
         .status-not-effective {
@@ -166,10 +166,10 @@
         
         footer {
             text-align: center;
-            margin-top: 50px;
-            padding: 20px;
+            margin-top: 20px;
+            padding: 10px;
             color: #666;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             border-top: 1px solid #ffcdd2;
         }
         
@@ -179,7 +179,7 @@
             }
             
             h1 {
-                font-size: 1.8rem;
+                font-size: 1.5rem;
             }
         }
     </style>
@@ -203,24 +203,24 @@
                         <div class="info-label">Pokok Pengaturan</div>
                         <div class="info-content">
                             <ul>
-                                <li>Wajah & suara dikategorikan sebagai <strong>data biometrik</strong> (data pribadi spesifik)</li>
-                                <li>Mengatur <strong>hak untuk menghapus</strong> dan <strong>membatasi pemrosesan</strong> data pribadi</li>
-                                <li>Melarang pemrosesan data pribadi tanpa <strong>dasar hukum</strong> yang sah</li>
+                                <li>Wajah & suara sebagai <strong>data biometrik</strong></li>
+                                <li>Hak <strong>menghapus</strong> & <strong>membatasi pemrosesan</strong></li>
+                                <li>Larangan pemrosesan tanpa <strong>dasar hukum</strong></li>
                             </ul>
                         </div>
                     </div>
                     <div class="info-section">
                         <div class="info-label">Relevansi dengan Deepfake</div>
                         <div class="info-content">
-                            Pembuatan deepfake memproses data biometrik (wajah/suara) tanpa izin, sehingga melanggar hak privasi dan merupakan pemrosesan yang ilegal.
+                            Pembuatan deepfake memproses data biometrik tanpa izin, melanggar hak privasi.
                         </div>
                     </div>
                     <div class="info-section">
-                        <div class="info-label">Status Implementasi & Tantangan</div>
+                        <div class="info-label">Status & Tantangan</div>
                         <div class="info-content">
                             <span class="status-badge status-not-effective">Belum Efektif</span>
                             <span class="status-badge status-none">Belum Ada BPDP</span>
-                            <p>Peraturan pelaksana (PP) belum diterbitkan. Lembaga pengawas (Badan Pelindungan Data Pribadi) belum dibentuk. Mekanisme pengaduan dan penegakan hukum belum berjalan.</p>
+                            <p>Peraturan pelaksana belum diterbitkan. Lembaga pengawas belum dibentuk.</p>
                         </div>
                     </div>
                 </div>
@@ -237,23 +237,23 @@
                         <div class="info-label">Pokok Pengaturan</div>
                         <div class="info-content">
                             <ul>
-                                <li>Menjerat <strong>Kekerasan Seksual Berbasis Elektronik (KSBE)</strong></li>
-                                <li>Memberikan hak kepada korban untuk <strong>pemulihan, pendampingan, dan penghapusan (takedown) konten</strong></li>
+                                <li>Menjerat <strong>KSBE</strong></li>
+                                <li>Hak korban: <strong>pemulihan, pendampingan, takedown</strong></li>
                             </ul>
                         </div>
                     </div>
                     <div class="info-section">
                         <div class="info-label">Relevansi dengan Deepfake</div>
                         <div class="info-content">
-                            Deepfake dengan muatan seksual merupakan bentuk KSBE yang dapat dipidana. Hak takedown memberikan jalan bagi korban untuk membatasi penyebaran.
+                            Deepfake seksual sebagai KSBE yang dapat dipidana. Hak takedown untuk membatasi penyebaran.
                         </div>
                     </div>
                     <div class="info-section">
-                        <div class="info-label">Status Implementasi & Tantangan</div>
+                        <div class="info-label">Status & Tantangan</div>
                         <div class="info-content">
                             <span class="status-badge status-weak">Implementasi Lemah</span>
                             <span class="status-badge status-slow">Proses Lambat</span>
-                            <p>Implementasi masih lemah di lapangan. Proses takedown konten masih sulit dan lambat. Kebingungan prosedur: korban sering diminta lapor polisi terlebih dahulu, padahal hak takedown tidak bergantung pada proses hukum pidana.</p>
+                            <p>Proses takedown sulit dan lambat. Kebingungan prosedur lapor polisi terlebih dahulu.</p>
                         </div>
                     </div>
                 </div>
@@ -263,31 +263,31 @@
             <div class="card">
                 <div class="card-header">
                     <h2 class="card-title">UU 11/2008 jo. UU 19/2016 tentang ITE</h2>
-                    <p class="card-subtitle">Pasal 27 Ayat (1), Pasal 27 Ayat (3), Pasal 28 Ayat (1)</p>
+                    <p class="card-subtitle">Pasal 27(1), 27(3), 28(1)</p>
                 </div>
                 <div class="card-body">
                     <div class="info-section">
                         <div class="info-label">Pokok Pengaturan</div>
                         <div class="info-content">
                             <ul>
-                                <li>Larangan distribusi konten melanggar <strong>kesusilaan</strong></li>
+                                <li>Larangan konten melanggar <strong>kesusilaan</strong></li>
                                 <li>Larangan <strong>pencemaran nama baik</strong></li>
-                                <li>Larangan penyebaran <strong>berita bohong</strong> yang meresahkan</li>
+                                <li>Larangan <strong>berita bohong</strong> yang meresahkan</li>
                             </ul>
                         </div>
                     </div>
                     <div class="info-section">
                         <div class="info-label">Relevansi dengan Deepfake</div>
                         <div class="info-content">
-                            Deepfake sering kali masuk dalam kategori konten kesusilaan, pencemaran nama baik, atau disinformasi, sehingga dapat dijangkau oleh UU ini.
+                            Deepfake masuk kategori kesusilaan, pencemaran nama baik, atau disinformasi.
                         </div>
                     </div>
                     <div class="info-section">
-                        <div class="info-label">Status Implementasi & Tantangan</div>
+                        <div class="info-label">Status & Tantangan</div>
                         <div class="info-content">
                             <span class="status-badge status-selective">Penggunaan Selektif</span>
                             <span class="status-badge status-none">Tidak Ada Pencegahan</span>
-                            <p>Pasal disinformasi cenderung digunakan secara selektif, terutama untuk kasus politik. Sering disalahgunakan untuk membungkam kritik, bukan melindungi korban deepfake. Hanya bersifat responsif (kriminalisasi) tanpa mekanisme pencegahan.</p>
+                            <p>Disalahgunakan untuk membungkam kritik, bukan melindungi korban deepfake.</p>
                         </div>
                     </div>
                 </div>
@@ -304,24 +304,24 @@
                         <div class="info-label">Pokok Pengaturan</div>
                         <div class="info-content">
                             <ul>
-                                <li><strong>Moderasi konten</strong> berdasarkan pedoman komunitas</li>
-                                <li>Kebijakan khusus terhadap <strong>konten intim non-konsensual</strong> dan deepfake</li>
-                                <li>Mekanisme pelaporan dan penghapusan konten</li>
+                                <li><strong>Moderasi konten</strong> berdasarkan pedoman</li>
+                                <li>Kebijakan khusus <strong>konten intim non-konsensual</strong></li>
+                                <li>Mekanisme pelaporan dan penghapusan</li>
                             </ul>
                         </div>
                     </div>
                     <div class="info-section">
                         <div class="info-label">Relevansi dengan Deepfake</div>
                         <div class="info-content">
-                            Merupakan garis pertahanan pertama untuk menghapus konten deepfake secara cepat dari media sosial dan ruang digital.
+                            Garis pertahanan pertama untuk menghapus konten deepfake dari media sosial.
                         </div>
                     </div>
                     <div class="info-section">
-                        <div class="info-label">Status Implementasi & Tantangan</div>
+                        <div class="info-label">Status & Tantangan</div>
                         <div class="info-content">
                             <span class="status-badge status-slow">Respons Lambat</span>
                             <span class="status-badge status-none">Konflik Kepentingan</span>
-                            <p>Respons platform sering lambat dan tidak konsisten. Moderator seringkali tidak memahami konteks dan bahasa daerah Indonesia. Konflik kepentingan: Model bisnis platform mengutamakan engagement, yang dapat bertentangan dengan penghapusan konten viral.</p>
+                            <p>Respons lambat dan tidak konsisten. Model bisnis mengutamakan engagement.</p>
                         </div>
                     </div>
                 </div>
