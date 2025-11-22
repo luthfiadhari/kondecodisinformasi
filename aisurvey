@@ -1,0 +1,246 @@
+<div id="viz-ai" class="viz-net">
+  <div class="panel">
+    <div class="header">
+      <h2>Paparan & Identifikasi Informasi Palsu</h2>
+      <img class="brand" alt="Konde.co" src="https://www.konde.co/wp-content/uploads/2021/03/Logo-Konde-Merah-1024x312.png">
+    </div>
+
+    <div class="tabs">
+      <a href="#" class="tab active" data-target="ai-lihat" role="button" aria-pressed="true">Pernah Melihat Hoaks AI</a>
+      <a href="#" class="tab" data-target="ai-paparan" role="button" aria-pressed="false">Paparan Menyerang Perempuan/Kelompok</a>
+      <a href="#" class="tab" data-target="ai-kanal" role="button" aria-pressed="false">Kanal Hoaks AI</a>
+      <a href="#" class="tab" data-target="ai-sikap" role="button" aria-pressed="false">Sikap pada Konten AI</a>
+      <a href="#" class="tab" data-target="ai-khawatir" role="button" aria-pressed="false">Tingkat Kekhawatiran</a>
+      <a href="#" class="tab" data-target="ai-kebijakan" role="button" aria-pressed="false">Kebijakan Pemerintah</a>
+      <a href="#" class="tab" data-target="ai-manfaat" role="button" aria-pressed="false">Manfaat vs Bahaya</a>
+      <span class="a11y" aria-live="polite" aria-atomic="true"></span>
+    </div>
+
+    <div class="chart-area">
+      <div class="chart" id="chart-ai-lihat" aria-label="Pernah melihat informasi palsu yang dibuat oleh AI"></div>
+      <div class="chart hidden" id="chart-ai-paparan" aria-label="Paparan informasi palsu AI yang menyerang perempuan/kelompok"></div>
+      <div class="chart hidden" id="chart-ai-kanal" aria-label="Kanal paling sering terlihat informasi palsu berbasis AI"></div>
+      <div class="chart hidden" id="chart-ai-sikap" aria-label="Sikap terhadap konten buatan AI"></div>
+      <div class="chart hidden" id="chart-ai-khawatir" aria-label="Tingkat kekhawatiran terhadap penyebaran hoaks AI"></div>
+      <div class="chart hidden" id="chart-ai-kebijakan" aria-label="Penilaian kebijakan pemerintah soal AI"></div>
+      <div class="chart hidden" id="chart-ai-manfaat" aria-label="Persepsi manfaat vs bahaya AI bagi perempuan"></div>
+    </div>
+
+    <div class="legend" id="legend-ai"></div>
+    <div class="insight" id="insight-ai"></div>
+  </div>
+</div>
+
+<style>
+#viz-ai, #viz-ai * { box-sizing: border-box; }
+#viz-ai.viz-net {
+  --bg:#0b0f17;--panel:#141a28;--border:#2a3650;--text:#f3f6ff;--muted:#c3cbe0;
+  --track:#1b2436;--fill:linear-gradient(90deg,#2de2e6,#14c5b8);
+  --fill2:linear-gradient(90deg,#7cf6a1,#3ad6a1);--fill3:linear-gradient(90deg,#ff7ad9,#dd52fb);
+  --glow:0 0 18px rgba(45,226,230,.28);
+  background:var(--bg); color:var(--text)!important; padding:18px;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,"Helvetica Neue",sans-serif; line-height:1.5;
+}
+#viz-ai .panel{max-width:1100px;margin:0 auto;background:var(--panel);border:1px solid var(--border);border-radius:14px;box-shadow:0 10px 40px rgba(0,0,0,.45);padding:16px;}
+#viz-ai .header{display:flex;align-items:center;gap:12px;justify-content:space-between;margin-bottom:10px;}
+#viz-ai h2{margin:0;font-size:18px;color:var(--text)!important;font-weight:700;}
+#viz-ai .brand{height:34px;width:auto;object-fit:contain;}
+#viz-ai .tabs{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
+#viz-ai .tabs .tab,#viz-ai .tabs .tab:link,#viz-ai .tabs .tab:visited{display:inline-block;text-decoration:none!important;border:1px solid var(--border)!important;background:#101728!important;color:var(--text)!important;padding:8px 12px!important;border-radius:10px!important;font-size:13px!important;line-height:1!important;cursor:pointer;}
+#viz-ai .tabs .tab.active{background:#162236!important;border-color:#2de2e6!important;color:#b7fbfd!important;box-shadow:var(--glow);}
+#viz-ai .a11y{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
+#viz-ai .chart-area{border:1px solid var(--border);border-radius:12px;padding:12px;background:#0f1523;}
+#viz-ai .chart.hidden{display:none;}
+#viz-ai .chart{display:grid;gap:10px;max-height:560px;overflow:auto;padding-right:4px;min-height:60px;}
+#viz-ai .bar-row{display:grid;grid-template-columns:minmax(200px,420px) 1fr;gap:12px;align-items:center;}
+#viz-ai .label{color:var(--text)!important;font-size:14px!important;line-height:1.4;word-break:break-word;}
+#viz-ai .bar-track{position:relative;background:var(--track);border:1px solid #222c42;border-radius:999px;height:34px;overflow:hidden;}
+#viz-ai .bar-fill{position:absolute;left:0;top:0;bottom:0;width:0%;background:var(--fill);border-right:1px solid rgba(255,255,255,.16);box-shadow:inset 0 -8px 16px rgba(0,0,0,.25),var(--glow);border-radius:999px;transition:width 900ms cubic-bezier(.2,.8,.2,1);}
+#viz-ai .bar-fill.theme-2{background:var(--fill2);}
+#viz-ai .bar-fill.theme-3{background:var(--fill3);}
+#viz-ai .value{position:absolute;right:10px;top:50%;transform:translateY(-50%);color:#0b1624;background:#ffffffd6;padding:4px 10px;border-radius:999px;font-size:13px;font-weight:800;pointer-events:none;white-space:nowrap;}
+#viz-ai .legend{margin-top:12px;font-size:13px;color:var(--muted)!important;display:grid;gap:4px;}
+#viz-ai .legend strong{color:var(--text)!important;}
+#viz-ai .insight{margin-top:8px;padding:10px 12px;border:1px solid #2a3650;border-radius:10px;background:#121827;color:#f3f6ff;font-size:13px;}
+#viz-ai .insight ul{margin:6px 0 0 18px;padding:0;}
+#viz-ai .insight li{margin:4px 0;}
+#viz-ai .insight strong{color:#b7fbfd;}
+@media (max-width:768px){#viz-ai .brand{height:28px;}#viz-ai h2{font-size:16px;}#viz-ai .bar-row{grid-template-columns:1fr;}#viz-ai .chart{max-height:none;}}
+</style>
+
+<script>
+(function(){
+  // Data (gunakan nama unik agar tidak bentrok)
+  const aiLihat = [
+    { label: "Tidak pernah", percent: 13.04 },
+    { label: "Ya, meski jarang", percent: 5.22 },
+    { label: "Ya, kadang-kadang", percent: 40.00 },
+    { label: "Ya, sering", percent: 18.26 }
+  ];
+  const aiPaparan = [
+    { label: "Tidak pernah", percent: 3.48 },
+    { label: "Ya, meski jarang", percent: 15.65 },
+    { label: "Ya, kadang-kadang", percent: 27.83 },
+    { label: "Ya, sering", percent: 46.09 }
+  ];
+  const aiKanal = [
+    { label: "WhatsApp/Aplikasi Pesan", percent: 5.99 },
+    { label: "Facebook", percent: 15.21 },
+    { label: "Instagram", percent: 23.50 },
+    { label: "TikTok", percent: 33.18 },
+    { label: "Twitter (X)", percent: 14.29 },
+    { label: "YouTube", percent: 5.99 },
+    { label: "Media Online", percent: 1.84 }
+  ];
+  const aiSikap = [
+    { label: "Tidak", percent: 55.65 },
+    { label: "Jika menurut saya valid, maka ya", percent: 38.26 },
+    { label: "Ragu-ragu", percent: 6.96 }
+  ];
+  const aiKhawatir = [
+    { label: "Sedikit khawatir", percent: 0.87 },
+    { label: "Cukup khawatir", percent: 3.48 },
+    { label: "Khawatir", percent: 26.96 },
+    { label: "Sangat khawatir", percent: 68.70 }
+  ];
+  const aiKebijakan = [
+    { label: "Sangat Buruk", percent: 29.57 },
+    { label: "Buruk", percent: 56.52 },
+    { label: "Baik", percent: 13.04 },
+    { label: "Sangat Baik", percent: 0.87 }
+  ];
+  const aiManfaat = [
+    { label: "Lebih banyak manfaat", percent: 5.22 },
+    { label: "Seimbang", percent: 46.09 },
+    { label: "Lebih banyak bahaya", percent: 46.96 },
+    { label: "Tidak tahu", percent: 1.74 }
+  ];
+
+  // DOM (ID unik)
+  const charts = {
+    'ai-lihat':   document.getElementById('chart-ai-lihat'),
+    'ai-paparan': document.getElementById('chart-ai-paparan'),
+    'ai-kanal':   document.getElementById('chart-ai-kanal'),
+    'ai-sikap':   document.getElementById('chart-ai-sikap'),
+    'ai-khawatir':document.getElementById('chart-ai-khawatir'),
+    'ai-kebijakan':document.getElementById('chart-ai-kebijakan'),
+    'ai-manfaat': document.getElementById('chart-ai-manfaat')
+  };
+  const legend = document.getElementById('legend-ai');
+  const insightBox = document.getElementById('insight-ai');
+  const a11y = document.querySelector('#viz-ai .a11y');
+
+  const fmt = n => (Math.round(n * 100) / 100).toFixed(2);
+
+  function render(el, data, theme = 1){
+    el.innerHTML = '';
+    if (!Array.isArray(data) || data.length === 0) {
+      el.innerHTML = '<div class="label">Data tidak tersedia.</div>';
+      return;
+    }
+    const frag = document.createDocumentFragment();
+    data.forEach(d => {
+      const row = document.createElement('div');
+      row.className = 'bar-row';
+
+      const label = document.createElement('div');
+      label.className = 'label';
+      label.textContent = d.label;
+
+      const track = document.createElement('div');
+      track.className = 'bar-track';
+
+      const fill = document.createElement('div');
+      fill.className = 'bar-fill' + (theme===2?' theme-2':theme===3?' theme-3':'');
+      const val = document.createElement('div');
+      val.className = 'value';
+      val.textContent = `${fmt(Number(d.percent))}%`;
+
+      track.appendChild(fill);
+      track.appendChild(val);
+      row.appendChild(label);
+      row.appendChild(track);
+      frag.appendChild(row);
+
+      requestAnimationFrame(()=> { fill.style.width = `${Math.max(0, Math.min(100, Number(d.percent)||0))}%`; });
+    });
+    el.appendChild(frag);
+
+    legend.innerHTML = `
+      <div><strong>Total responden (n)=115</strong> • Kanal: multi-jawaban</div>
+      <div>Data diolah dari Riset Konde.co, November 2025</div>
+    `;
+    a11y.textContent = 'Grafik diperbarui';
+  }
+
+  const insights = {
+    'ai-lihat': [
+      "Mayoritas pernah melihat hoaks AI setidaknya sesekali.",
+      "Hanya 13,04% yang tidak pernah."
+    ],
+    'ai-paparan': [
+      "Konten menyerang perempuan/kelompok cukup sering: 'Ya, sering' 46,09%.",
+      "Hanya 3,48% yang tidak pernah."
+    ],
+    'ai-kanal': [
+      "Dominan di TikTok (33,18%) dan Instagram (23,50%).",
+      "WhatsApp/YouTube 5–6%, media online 1,84%."
+    ],
+    'ai-sikap': [
+      "Sebagian besar tidak membagikan konten AI (55,65%).",
+      "38,26% akan membagikan bila dinilai valid."
+    ],
+    'ai-khawatir': [
+      "Kekhawatiran sangat tinggi: 'Sangat khawatir' 68,70%.",
+      "Gabungan khawatir+sangat khawatir >95%."
+    ],
+    'ai-kebijakan': [
+      "Penilaian kebijakan cenderung negatif: Buruk/Sangat Buruk ~86%.",
+      "Respon positif sekitar 14%."
+    ],
+    'ai-manfaat': [
+      "Seimbang 46,09% vs Bahaya 46,96% — persepsi terbagi.",
+      "Melihat manfaat lebih banyak masih 5,22%."
+    ]
+  };
+  function updateInsight(key){
+    const list = insights[key] || [];
+    insightBox.innerHTML = `<strong>Kesimpulan:</strong><ul>${list.map(x=>`<li>${x}</li>`).join("")}</ul>`;
+  }
+
+  function show(key){
+    Object.values(charts).forEach(c=>c.classList.add('hidden'));
+    charts[key].classList.remove('hidden');
+
+    if (key==='ai-lihat')    render(charts[key], aiLihat, 1);
+    if (key==='ai-paparan')  render(charts[key], aiPaparan, 2);
+    if (key==='ai-kanal')    render(charts[key], aiKanal, 3);
+    if (key==='ai-sikap')    render(charts[key], aiSikap, 1);
+    if (key==='ai-khawatir') render(charts[key], aiKhawatir, 2);
+    if (key==='ai-kebijakan')render(charts[key], aiKebijakan, 3);
+    if (key==='ai-manfaat')  render(charts[key], aiManfaat, 1);
+
+    updateInsight(key);
+  }
+
+  const tabs = document.querySelectorAll('#viz-ai .tab');
+  tabs.forEach(tab=>{
+    tab.addEventListener('click', (e)=>{
+      e.preventDefault();
+      tabs.forEach(t=>{ t.classList.remove('active'); t.setAttribute('aria-pressed','false'); });
+      tab.classList.add('active'); tab.setAttribute('aria-pressed','true');
+      show(tab.getAttribute('data-target'));
+    });
+  });
+
+  // Initial render
+  render(charts['ai-lihat'], aiLihat, 1);
+  render(charts['ai-paparan'], aiPaparan, 2);
+  render(charts['ai-kanal'], aiKanal, 3);
+  render(charts['ai-sikap'], aiSikap, 1);
+  render(charts['ai-khawatir'], aiKhawatir, 2);
+  render(charts['ai-kebijakan'], aiKebijakan, 3);
+  render(charts['ai-manfaat'], aiManfaat, 1);
+  show('ai-kanal'); /* opsional: langsung tampilkan tab Kanal saat load untuk cek */
+})();
+</script>
