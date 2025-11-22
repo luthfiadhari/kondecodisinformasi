@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLITCH: Kisah Ayu Korban Deepfake</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        :root {
+            --bg-color: #1a1a2e;
+            --ui-bg: #16213e;
+            --text-color: #eee;
+            --primary-color: #0f3460;
+            --accent-color: #e94560;
+            --warning-color: #ff9800;
+            --glitch-red: #ff0000;
+            --glitch-blue: #00ffff;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 10px;
+        }
+
+        #story-container {
+            width: 95%;
+            max-width: 900px;
+            height: 95vh;
+            border: 4px solid var(--primary-color);
+            background-color: var(--ui-bg);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 20px rgba(233, 69, 96, 0.5);
+            position: relative;
+        }
+
+        /* --- HEADER SECTION --- */
+        #header-section {
+            background-color: var(--primary-color);
+            padding: 12px 15px;
+            border-bottom: 4px solid var(--text-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        #header-title {
+            color: var(--warning-color);
+            font-size: 14px;
+            margin: 0;
+            text-align: center;
+            flex: 1;
+        }
+
+        /* --- NAVIGATION CONTROLS --- */
+        .nav-controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background-color: var(--accent-color);
+            color: var(--text-color);
+            border: none;
+            padding: 10px 12px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 3px solid var(--text-color);
+            border-radius: 6px;
+            min-width: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background-color: #c73650;
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .nav-btn:disabled {
+            background-color: #666;
+            cursor: not-allowed;
+            transform: none;
+            opacity: 0.5;
+        }
+
+        /* Progress indicator */
+        .progress-indicator {
+            text-align: center;
+            font-size: 10px;
+            color: var(--warning-color);
+            padding: 6px 10px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+            border: 2px solid var(--text-color);
+        }
+
+        /* --- SCENE DISPLAY --- */
+        #scene-display {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scene {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            width: 100%;
+        }
+
+        .scene.active {
+            display: flex;
+        }
+
+        #scene-title {
+            color: var(--warning-color);
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        #character-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 150px;
+            margin-bottom: 15px;
+        }
+
+        .character {
+            font-size: 70px;
+            user-select: none;
+            transition: transform 0.3s;
+        }
+
+        .character.sad { filter: grayscale(100%) brightness(0.7); }
+        .character.angry { filter: hue-rotate(320deg) saturate(1.5); }
+        .character.hopeful { filter: brightness(1.2) saturate(1.5); }
+
+        /* --- DIALOGUE BOX --- */
+        #dialogue-box {
+            background-color: rgba(15, 52, 96, 0.8);
+            border: 4px solid var(--text-color);
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            line-height: 1.6;
+            min-height: 200px;
+            overflow: hidden;
+        }
+
+        #dialogue-box p {
+            margin: 8px 0;
+            font-size: 11px;
+        }
+        
+        #dialogue-box p.speaker {
+            color: var(--warning-color);
+            margin-bottom: 12px;
+        }
+
+        /* --- SPECIAL EFFECTS --- */
+        .glitch {
+            animation: glitch-anim 0.5s infinite;
+        }
+
+        @keyframes glitch-anim {
+            0% {
+                text-shadow: 0.05em 0 0 var(--glitch-red), -0.05em -0.025em 0 var(--glitch-blue);
+                transform: translate(2px, -2px);
+            }
+            15% {
+                text-shadow: 0.05em 0 0 var(--glitch-red), -0.05em -0.025em 0 var(--glitch-blue);
+                transform: translate(-2px, 2px);
+            }
+            16% {
+                text-shadow: -0.05em -0.025em 0 var(--glitch-red), 0.025em 0.025em 0 var(--glitch-blue);
+            }
+            49% {
+                text-shadow: -0.05em -0.025em 0 var(--glitch-red), 0.025em 0.025em 0 var(--glitch-blue);
+            }
+            50% {
+                text-shadow: 0.025em 0.05em 0 var(--glitch-red), 0.05em 0 0 var(--glitch-blue);
+                transform: translate(2px, 2px);
+            }
+            99% {
+                text-shadow: 0.025em 0.05em 0 var(--glitch-red), 0.05em 0 0 var(--glitch-blue);
+                transform: translate(2px, 2px);
+            }
+            100% {
+                text-shadow: -0.025em 0 0 var(--glitch-red), -0.025em -0.025em 0 var(--glitch-blue);
+                transform: translate(0, 0);
+            }
+        }
+
+        .game-over {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .game-over h2 {
+            color: var(--accent-color);
+            font-size: 24px;
+        }
+
+        .game-over p {
+            margin-top: 15px;
+            color: var(--warning-color);
+            font-size: 12px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+            
+            #story-container {
+                width: 100%;
+                height: 90vh;
+            }
+            
+            .nav-btn {
+                padding: 8px 10px;
+                font-size: 14px;
+                min-width: 45px;
+            }
+            
+            .character {
+                font-size: 60px;
+            }
+            
+            #dialogue-box {
+                padding: 12px;
+            }
+            
+            #header-title {
+                font-size: 12px;
+            }
+            
+            .progress-indicator {
+                font-size: 9px;
+                padding: 5px 8px;
+            }
+            
+            #dialogue-box p {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="story-container">
+        <!-- Header dengan Navigasi -->
+        <div id="header-section">
+            <button id="prev-btn" class="nav-btn" disabled>⬅️</button>
+            
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1;">
+                <div id="header-title">AYU, KORBAN DEEPFAKE MANTAN PACAR</div>
+                <div class="progress-indicator">
+                    Adegan <span id="current-scene">1</span> dari <span id="total-scenes">13</span>
+                </div>
+            </div>
+            
+            <button id="next-btn" class="nav-btn">➡️</button>
+        </div>
+
+        <div id="scene-display">
+            <!-- Prolog -->
+            <div id="bab1-scene1" class="scene active">
+                <h2 id="scene-title">PROLOG</h2>
+                <div id="character-area">
+                    <div class="character hopeful">👩</div>
+                </div>
+                <div id="dialogue-box">
+                    <p class="speaker">Ayu:</p>
+                    <p>Hidupku berjalan normal sebagai mahasiswi. Aku menjalani hari-hari dengan rutinitas kuliah dan pertemanan.</p>
+                </div>
+            </div>
+
+            <div id="bab1-scene2" class="scene">
+                <h2 id="scene-title">PROLOG</h2>
+                <div id="character-area">
+                    <div class=""character sad">💑</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Aku pernah menjalin hubungan dengan seseorang. Kami sudah putus, tapi aku tidak menyangka dia akan melakukan hal seperti ini.</p>
+                </div>
+            </div>
+
+            <!-- Bab 2 -->
+            <div id="bab2-scene1" class="scene">
+                <h2 id="scene-title">PESAN YANG MENGUBAH SEGALANYA</h2>
+                <div id="character-area">
+                    <div class="character" id="glitch-target">📱</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Sebuah pesan WhatsApp masuk dari temanku. Tangkapan layar dengan wajahku, tapi tubuh dalam foto itu bukan diriku.</p>
+                    <p class="speaker">Teman Ayu:</p>
+                    <p>"Ini nggak mungkin kamu, kan?"</p>
+                </div>
+            </div>
+            
+            <div id="bab2-scene2" class="scene">
+                <h2 id="scene-title">PESAN YANG MENGUBAH SEGALANYA</h2>
+                <div id="character-area">
+                    <div class="character glitch">👩</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Kepalaku serasa berputar. Foto itu diedit dengan sempurna. Di bawahnya ada pesan yang mempromosikan 'open BO'.</p>
+                    <p class="speaker">Ayu:</p>
+                    <p>"Dia percaya sama aku, tapi dia merasa harus kasih tahu aku juga bahwa fotoku ada yang ngedit seperti itu."</p>
+                </div>
+            </div>
+
+            <div id="bab2-scene3" class="scene">
+                <h2 id="scene-title">PESAN YANG MENGUBAH SEGALANYA</h2>
+                <div id="character-area">
+                    <div class="character sad">👩</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Aku langsung panik. Menghapus tangkapan layar yang otomatis tersimpan. Aku tidak mengenali nomor yang menyebarkan foto itu.</p>
+                    <p class="speaker">Ayu:</p>
+                    <p>"Terus aku juga jadi ngecek ke teman-teman yang lain sampai keluargaku, ada yang dapat chat kayak gitu juga nggak?"</p>
+                </div>
+            </div>
+
+            <!-- Bab 3 -->
+            <div id="bab3-scene1" class="scene">
+                <h2 id="scene-title">PENYELIDIKAN DAN KONFRONTASI</h2>
+                <div id="character-area">
+                    <div class="character angry">👩</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Butuh sekitar satu minggu untuk kembali bernapas lega. Tapi keseharianku tetap dihantui kecemasan, rasa malu, dan ancaman tak terlihat.</p>
+                    <p>Kecurigaan mengarah pada satu orang: mantan pacarku.</p>
+                </div>
+            </div>
+
+            <div id="bab3-scene2" class="scene">
+                <h2 id="scene-title">PENYELIDIKAN DAN KONFRONTASI</h2>
+                <div id="character-area">
+                    <div class="character angry">👨</div>
+                </div>
+                <div id="dialogue-box">
+                    <p class="speaker">Mantan Pacar:</p>
+                    <p>"Iseng aja kok."</p>
+                    <p>Ditemani seorang teman, aku mengonfrontirnya. Dia mengaku "iseng" dan meminta maaf.</p>
+                    <p>Foto wajah yang disebar hanya pernah aku kirimkan ke dia.</p>
+                </div>
+            </div>
+
+            <div id="bab3-scene3" class="scene">
+                <h2 id="scene-title">PENYELIDIKAN DAN KONFRONTASI</h2>
+                <div id="character-area">
+                    <div class="character sad">👩</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Peristiwa itu meninggalkan trauma mendalam. Tapi aku memilih tidak melaporkannya. Tidak ke keluarga, tidak ke kampus, dan tidak ke polisi.</p>
+                    <p class="speaker">Ayu:</p>
+                    <p>"Jujur takut dan trauma, tapi aku kayak nggak mau jadi ke mana-mana, lebih takut kalau jadi panjang urusannya."</p>
+                </div>
+            </div>
+
+            <div id="bab3-scene4" class="scene">
+                <h2 id="scene-title">PENYELIDIKAN DAN KONFRONTASI</h2>
+                <div id="character-area">
+                    <div class="character sad">👩</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Aku takut stigma. Takut penghakiman. Takut kasusku akan berlarut-larut.</p>
+                    <p>Yang kuinginkan saat itu hanya memastikan foto itu tidak tersebar lebih jauh.</p>
+                </div>
+            </div>
+
+            <div id="bab3-scene5" class="scene">
+                <h2 id="scene-title">PENYELIDIKAN DAN KONFRONTASI</h2>
+                <div id="character-area">
+                    <div class="character">👩</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Dua temanku ternyata menerima pesan serupa. Untungnya, penyebarannya tidak meluas.</p>
+                    <p>Mantan pacarku berjanji tidak akan menyebarkan lagi dan telah menghapus foto tersebut.</p>
+                </div>
+            </div>
+            
+            <div id="bab3-scene6" class="scene">
+                <h2 id="scene-title">PENYELIDIKAN DAN KONFRONTASI</h2>
+                <div id="character-area">
+                    <div class="character hopeful">👩</div>
+                </div>
+                <div id="dialogue-box">
+                    <p class="speaker">Ayu:</p>
+                    <p>"Aku pengin kayak, ya udah, lupain aja."</p>
+                    <p>"Walaupun memang habis itu benar-benar merasa nggak nyaman terus karena tahu fotoku pernah diedit dan dibikin fitnah kayak gitu."</p>
+                </div>
+            </div>
+
+            <!-- Epilog -->
+            <div id="epilog-scene1" class="scene">
+                <h2 id="scene-title">EPILOG: LUKA YANG TERSISA</h2>
+                <div id="character-area">
+                    <div class="character sad">👩</div>
+                </div>
+                <div id="dialogue-box">
+                    <p class="speaker">Ayu:</p>
+                    <p>"Aku mencoba berjalan lagi, tapi bayangan kejadian itu tetap mengikuti."</p>
+                    <p>Trauma akibat deepfake tidak hanya tentang foto palsu, tapi tentang kepercayaan yang dikhianati dan rasa aman yang direnggut.</p>
+                </div>
+            </div>
+
+            <div id="epilog-scene2" class="scene">
+                <h2 id="scene-title">EPILOG: LUKA YANG TERSISA</h2>
+                <div id="character-area">
+                    <div class="character hopeful">👩</div>
+                </div>
+                <div id="dialogue-box">
+                    <p>Kisah Ayu menggambarkan bagaimana teknologi manipulasi visual bisa menghancurkan rasa aman seseorang, bahkan ketika pelakunya adalah orang yang pernah dipercaya.</p>
+                    <p>Teknologi tidak pernah netral, ketika patriarki dan segala bentuk kekerasan memegang kendali, ia menjadi racun yang menebar trauma. Dan lagi, perempuan mesti kembali berjuang dan bertahan.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data semua adegan
+        const scenes = [
+            { id: 'bab1-scene1', title: 'PROLOG' },
+            { id: 'bab1-scene2', title: 'PROLOG' },
+            { id: 'bab2-scene1', title: 'PESAN YANG MENGUBAH SEGALANYA', glitch: true },
+            { id: 'bab2-scene2', title: 'PESAN YANG MENGUBAH SEGALANYA' },
+            { id: 'bab2-scene3', title: 'PESAN YANG MENGUBAH SEGALANYA' },
+            { id: 'bab3-scene1', title: 'PENYELIDIKAN DAN KONFRONTASI' },
+            { id: 'bab3-scene2', title: 'PENYELIDIKAN DAN KONFRONTASI' },
+            { id: 'bab3-scene3', title: 'PENYELIDIKAN DAN KONFRONTASI' },
+            { id: 'bab3-scene4', title: 'PENYELIDIKAN DAN KONFRONTASI' },
+            { id: 'bab3-scene5', title: 'PENYELIDIKAN DAN KONFRONTASI' },
+            { id: 'bab3-scene6', title: 'PENYELIDIKAN DAN KONFRONTASI' },
+            { id: 'epilog-scene1', title: 'EPILOG: LUKA YANG TERSISA' },
+            { id: 'epilog-scene2', title: 'EPILOG: LUKA YANG TERSISA' }
+        ];
+
+        let currentSceneIndex = 0;
+
+        // Elemen UI
+        const nextBtn = document.getElementById('next-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const sceneTitle = document.getElementById('scene-title');
+        const currentSceneSpan = document.getElementById('current-scene');
+        const totalScenesSpan = document.getElementById('total-scenes');
+
+        // Inisialisasi
+        totalScenesSpan.textContent = scenes.length;
+
+        function showScene(index) {
+            // Validasi indeks
+            if (index < 0 || index >= scenes.length) return;
+            
+            // Update indeks adegan saat ini
+            currentSceneIndex = index;
+            
+            // Sembunyikan semua adegan
+            document.querySelectorAll('.scene').forEach(scene => {
+                scene.classList.remove('active');
+            });
+
+            // Tampilkan adegan saat ini
+            const currentSceneData = scenes[index];
+            const currentSceneElement = document.getElementById(currentSceneData.id);
+            currentSceneElement.classList.add('active');
+            
+            // Update judul
+            sceneTitle.textContent = currentSceneData.title;
+
+            // Terapkan efek glitch jika diperlukan
+            if (currentSceneData.glitch) {
+                const glitchTarget = document.getElementById('glitch-target');
+                if (glitchTarget) {
+                    // Reset glitch effect
+                    glitchTarget.classList.remove('glitch');
+                    setTimeout(() => {
+                        glitchTarget.classList.add('glitch');
+                    }, 100);
+                }
+            }
+
+            // Update status tombol navigasi
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === scenes.length - 1;
+            
+            // Update indikator progress
+            currentSceneSpan.textContent = index + 1;
+
+            // Update teks tombol di adegan terakhir
+            if (index === scenes.length - 1) {
+                nextBtn.textContent = '🏁';
+            } else {
+                nextBtn.textContent = '➡️';
+            }
+        }
+
+        // Event listeners untuk navigasi
+        nextBtn.addEventListener('click', () => {
+            if (currentSceneIndex < scenes.length - 1) {
+                showScene(currentSceneIndex + 1);
+            } else {
+                // Tampilkan pesan akhir
+                alert('Terima kasih telah mengikuti kisah Ayu. Kisahnya mewakili banyak korban kekerasan digital yang memilih diam karena takut stigma dan proses hukum yang berlarut.');
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentSceneIndex > 0) {
+                showScene(currentSceneIndex - 1);
+            }
+        });
+
+        // Tambahkan navigasi keyboard
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Spacebar') {
+                // Tombol panah kanan atau spasi untuk maju
+                e.preventDefault();
+                if (currentSceneIndex < scenes.length - 1) {
+                    showScene(currentSceneIndex + 1);
+                }
+            } else if (e.key === 'ArrowLeft') {
+                // Tombol panah kiri untuk mundur
+                e.preventDefault();
+                if (currentSceneIndex > 0) {
+                    showScene(currentSceneIndex - 1);
+                }
+            }
+        });
+
+        // Inisialisasi adegan pertama
+        showScene(currentSceneIndex);
+    </script>
+</body>
+</html>
